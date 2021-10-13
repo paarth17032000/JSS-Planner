@@ -1,0 +1,12 @@
+.section {
+    min-height: calc(100vh - 14rem);
+}
+
+.borderBottom {
+    border-bottom: 0.5px solid #DCEAFF;
+}
+
+.block {
+    width: 263px;
+    height: 238px;
+}

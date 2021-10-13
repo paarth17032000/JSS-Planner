@@ -1,9 +1,10 @@
 import './App.css';
+import {renderRoutes, routes} from './Router'
 
 function App() {
   return (
     <div className="App">
-      <div className="text-yellow-500 text-xl">JSS-Planner</div>
+      {renderRoutes(routes)}
     </div>
   );
 }

@@ -1,38 +1,62 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: OpenSans-bold;
+    src: url(./assets/fonts/OpenSans-Bold.ttf);
+    font-display: swap;
+}
+@font-face {
+    font-family: OpenSans-semi-bold;
+    src: url(./assets/fonts/OpenSans-SemiBold.ttf);
+    font-display: swap;
+}
+@font-face {
+    font-family: OpenSans-medium;
+    src: url(./assets/fonts/OpenSans-Medium.ttf);
+    font-display: swap;
+}
+@font-face {
+    font-family: OpenSans-regular;
+    src: url(./assets/fonts/OpenSans-Regular.ttf);
+    font-display: swap;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.font-bold {
+  margin: 0;
+  font-family: OpenSans-bold !important;
+}
+.font-semi-bold {
+  margin: 0;
+  font-family: OpenSans-semi-bold;
+}
+.font-medium {
+    margin: 0;
+  font-family: OpenSans-medium;
+}
+.font-regular {
+    margin: 0;
+  font-family: OpenSans-regular;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.font-12{
+    font-size: 12px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.font-14{
+    font-size: 14px;
 }
-
-.App-link {
-  color: #61dafb;
+.font-16{
+    font-size: 16px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.font-18{
+    font-size: 18px;
+}
+.font-20{
+    font-size: 20px;
+}
+.font-24{
+    font-size: 24px;
+}
+.font-28{
+    font-size: 28px;
+}
+.font-36{
+    font-size: 36px;
 }
