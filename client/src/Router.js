@@ -32,5 +32,17 @@ export const routes = [
         path: '/',
         // gaurd: '',
         component: lazy(() => import('./pages/Landing'))
+    },
+    {
+        exact: true,
+        path: '/login',
+        // gaurd: '',
+        component: lazy(() => import('./pages/Login'))
+    },
+    {
+        exact: true,
+        path: '/time-table',
+        // gaurd: '',
+        component: lazy(() => import('./pages/Time-Table'))
     }
 ]

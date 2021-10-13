@@ -60,3 +60,15 @@
 .font-36{
     font-size: 36px;
 }
+
+@media screen and (max-width: 500px) {
+    .font-24{
+        font-size: 18px;
+    }
+    .font-28{
+        font-size: 20px;
+    }
+    .font-36{
+        font-size: 28px;
+    }
+}

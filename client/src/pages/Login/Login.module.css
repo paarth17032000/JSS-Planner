@@ -7,11 +7,11 @@
     min-width: 73px;
 }
 
-.borderBottom {
-    border-bottom: 0.5px solid #DCEAFF;
+.input {
+    border: 1px solid #D6DCE7;
+    padding: 13px 20px;
 }
 
-.block {
-    width: 263px;
-    height: 238px;
+.borderBottom {
+    border-bottom: 0.5px solid #DCEAFF;
 }
