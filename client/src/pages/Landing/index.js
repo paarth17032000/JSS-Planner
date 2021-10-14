@@ -12,7 +12,7 @@ export default function Landing() {
             <div className={`h-28 pl-5 flex flex-row justify-start items-center ${styles.borderBottom}`}>
                 <div><img src={Jss_Logo} alt="jss_logo" className={styles.jss_logo} /></div>
                 <div className="pl-5">
-                    <div className="font-bold text-primary font-24 ">JSS Academy of technical education</div>
+                    <div className="font-bold text-primary font-22">JSS Academy of technical education</div>
                     <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
                 </div>
             </div>
