@@ -16,7 +16,8 @@ module.exports = {
       'tertiary': '#EAF2FA',
       'background': '#F4F8FE',
       'links': '#CDCEDA',
-      'white': '#FFFFFF'
+      'white': '#FFFFFF',
+      'default': '#E3E8F0 '
     }),
   },
   variants: {

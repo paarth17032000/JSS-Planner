@@ -43,6 +43,12 @@ export const routes = [
         exact: true,
         path: '/time-table',
         // gaurd: '',
-        component: lazy(() => import('./pages/Time-Table'))
+        component: lazy(() => import('./pages/TimeTable'))
+    },
+    {
+        exact: true,
+        path: '/staff-list',
+        // gaurd: '',
+        component: lazy(() => import('./pages/StaffList'))
     }
 ]
