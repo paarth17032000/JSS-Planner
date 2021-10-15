@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, Fragment } from 'react'
-import { Menu, Dialog, Transition, Listbox } from '@headlessui/react'
+import { Menu, Dialog, Transition } from '@headlessui/react'
 import { NavLink } from 'react-router-dom'
 import styles from './StaffList.module.css'
 import addIcon from '../../assets/images/icons/add.png'
@@ -8,8 +8,6 @@ import closeIcon from '../../assets/images/icons/close.png'
 import menuIcon from '../../assets/images/icons/menu.png'
 import TripleDots from "../../assets/images/icons/triple-dot.svg"
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
-import { HiSelector } from 'react-icons/hi'
-import { AiOutlineCheck } from 'react-icons/ai'
 
 const people = [
   { name: 'Wade Cooper' },
@@ -25,7 +23,7 @@ function classNames(...classes) {
 
 export default function StaffList() {
   let [isOpen, setIsOpen] = useState(false)
-  const [selected, setSelected] = useState(people[0])
+  // const [selected, setSelected] = useState(people[0])
 
   function closeModal() {
     setIsOpen(false)
