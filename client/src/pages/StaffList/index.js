@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import styles from './StaffList.module.css'
 import addIcon from '../../assets/images/icons/add.png'
 import closeIcon from '../../assets/images/icons/close.png'
+import menuIcon from '../../assets/images/icons/menu.png'
 import TripleDots from "../../assets/images/icons/triple-dot.svg"
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 import { HiSelector } from 'react-icons/hi'
@@ -45,7 +46,7 @@ export default function StaffList() {
             <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
           </div>
         </div>
-        <div className="flex md:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
+        <div className="flex hidden lg:inline-flex lg:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
           <NavLink to='staff-list'>
             <div className="text-primary-red pr-8">Home</div>
           </NavLink>
@@ -55,6 +56,9 @@ export default function StaffList() {
           <NavLink to='/'>
             <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
           </NavLink>
+        </div>
+        <div className="block lg:hidden px-8 cursor-pointer">
+          <img src={menuIcon} alt="icon" width={32} height={24} />
         </div>
       </div>
 

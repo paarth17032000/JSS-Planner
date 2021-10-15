@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './TimeTable.module.css'
 import { NavLink } from 'react-router-dom'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
+import menuIcon from '../../assets/images/icons/menu.png'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import {BiChevronDown} from 'react-icons/bi'
@@ -22,24 +23,27 @@ export default function TimeTable() {
         <div className="min-h-screen bg-background">
 
             <div className={`h-28 pl-5 flex flex-row justify-between items-center ${styles.borderBottom}`}>
-            <div className="flex flex-row justify-center items-center">
-                <div><img src={Jss_Logo} alt="jss_logo" className={styles.jss_logo} /></div>
-                <div className="pl-5">
-                <div className="font-bold text-primary font-22 ">JSS Academy of Technical Education</div>
-                <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
+                <div className="flex flex-row justify-center items-center">
+                    <div><img src={Jss_Logo} alt="jss_logo" className={styles.jss_logo} /></div>
+                    <div className="pl-5">
+                    <div className="font-bold text-primary font-22 ">JSS Academy of Technical Education</div>
+                    <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
+                    </div>
                 </div>
-            </div>
-            <div className="flex md:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
-                <NavLink to='staff-list'>
-                <div className="text-primary-red pr-8">Home</div>
-                </NavLink>
-                <NavLink to='/time-table'>
-                <div className="pr-8">Time-table</div>
-                </NavLink>
-                <NavLink to='/'>
-                <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
-                </NavLink>
-            </div>
+                <div className="flex hidden lg:inline-flex lg:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
+                    <NavLink to='staff-list'>
+                    <div className="text-primary-red pr-8">Home</div>
+                    </NavLink>
+                    <NavLink to='/time-table'>
+                    <div className="pr-8">Time-table</div>
+                    </NavLink>
+                    <NavLink to='/'>
+                    <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
+                    </NavLink>  
+                </div>
+                <div className="block lg:hidden px-8 cursor-pointer">
+                    <img src={menuIcon} alt="icon" width={32} height={24} />
+                </div>
             </div>
 
             <div className="my-6 mx-8">

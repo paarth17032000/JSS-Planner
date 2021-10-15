@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { LoginUser } from '../../components/Api'
 import styles from './Login.module.css'
 import bg from '../../assets/images/bg-login.png'
@@ -13,7 +13,7 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        LoginUser(user)
+        // LoginUser(user)
     }
 
     const handleChange = (e) => {
@@ -45,10 +45,10 @@ export default function Login() {
                             <input type="text" name="password" placeholder="Password..." className={`rounded-lg focus:outline-none ${styles.input}`} onChange={handleChange} />
                         </div>
                         <div className="font-regular font-16 text-right text-secondary pb-8">Forget Password?</div>
-                        {/* <Link to='/'> */}
+                        <Link to='/staff-list'>
                             {/* <input type="submit" className="bg-primary text-white rounded-lg p-3 text-center font-semi-bold font-16">Login</input> */}
                             <input type="submit" value="Login" className="bg-primary w-full text-white rounded-lg p-3 text-center font-semi-bold font-16" />
-                        {/* </Link> */}
+                        </Link>
                     </form>
                 </div>
             </div>
