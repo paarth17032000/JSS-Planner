@@ -1,10 +1,28 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+// import { Link } from 'react-router-dom'
+import { LoginUser } from '../../components/Api'
 import styles from './Login.module.css'
 import bg from '../../assets/images/bg-login.png'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 
 export default function Login() {
+    const [user, setUser] = useState({
+        email: '',
+        password: ''
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        LoginUser(user)
+    }
+
+    const handleChange = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
+    }
+
     return (
         <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-background">
             <div>
@@ -16,15 +34,22 @@ export default function Login() {
                     </div>
                 </div>
                 <div className={`flex justify-center items-center ${styles.section}`}>
-                    <div className="text-left ">
+                    <form onSubmit={handleSubmit} className="text-left">
                         <div className="font-regular font-28 text-secondary pb-6">Welcome back!</div>
-                        <div className="pb-5"><input type="text" placeholder="Email" className={`rounded-lg ${styles.input}`} /></div>
-                        <div className="pb-2"><input type="text" placeholder="Password" className={`rounded-lg ${styles.input}`} /></div>
+                        <div className="pb-5 flex flex-col">
+                            <div className="font-regular font-12 text-shadow pl-1">Email</div>
+                            <input type="text" name="email" placeholder="Email..." className={`rounded-lg focus:outline-none ${styles.input}`} onChange={handleChange} />
+                        </div>
+                        <div className="pb-2 flex flex-col">
+                            <div className="font-regular font-12 text-shadow pl-1">Password</div>
+                            <input type="text" name="password" placeholder="Password..." className={`rounded-lg focus:outline-none ${styles.input}`} onChange={handleChange} />
+                        </div>
                         <div className="font-regular font-16 text-right text-secondary pb-8">Forget Password?</div>
-                        <Link to='/staff-list'>
-                            <div className="bg-primary text-white rounded-lg p-3 text-center font-semi-bold font-16">Login</div>
-                        </Link>
-                    </div>
+                        {/* <Link to='/'> */}
+                            {/* <input type="submit" className="bg-primary text-white rounded-lg p-3 text-center font-semi-bold font-16">Login</input> */}
+                            <input type="submit" value="Login" className="bg-primary w-full text-white rounded-lg p-3 text-center font-semi-bold font-16" />
+                        {/* </Link> */}
+                    </form>
                 </div>
             </div>
 

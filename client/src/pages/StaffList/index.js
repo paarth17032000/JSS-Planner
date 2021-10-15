@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, Fragment } from 'react'
 import { Menu, Dialog, Transition, Listbox } from '@headlessui/react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './StaffList.module.css'
 import addIcon from '../../assets/images/icons/add.png'
 import closeIcon from '../../assets/images/icons/close.png'
@@ -46,15 +46,15 @@ export default function StaffList() {
           </div>
         </div>
         <div className="flex md:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
-          <Link>
+          <NavLink to='staff-list'>
             <div className="text-primary-red pr-8">Home</div>
-          </Link>
-          <Link>
+          </NavLink>
+          <NavLink to='/time-table'>
             <div className="pr-8">Time-table</div>
-          </Link>
-          <Link to='/'>
+          </NavLink>
+          <NavLink to='/'>
             <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
-          </Link>
+          </NavLink>
         </div>
       </div>
 
@@ -113,13 +113,13 @@ export default function StaffList() {
                         <div className="mt-5 mb-10 px-5">
                           <div className="flex flex-row justify-between items-baseline">
                             <div className="font-regular font-16 text-secondary">Name</div>
-                            <div className="font-regular font-16 text-secondary pb-5">
+                            <div className="font-regular font-16 text-secondary pb-5 w-60">
                               <input type="text" placeholder="Name..." className={`rounded-lg focus:outline-none ${styles.input}`} />
                             </div>
                           </div>
                           <div className="flex flex-row justify-between items-baseline">
                             <div className="font-regular font-16 text-secondary">Department</div>
-                            <div className="font-regular font-16 text-secondary pb-5">
+                            <div className="font-regular font-16 text-secondary pb-5 w-60">
                               <input type="text" placeholder="Department..." className={`rounded-lg focus:outline-none ${styles.input}`} />
                             </div>
                           </div>
@@ -128,10 +128,10 @@ export default function StaffList() {
                             {/* <div className="font-regular font-16 text-secondary pb-5">
                                                             <input type="text" placeholder="Choose" className={`rounded-lg ${styles.input}`} />
                                                         </div> */}
-                            <div className="">
+                            {/* <div className="w-60">
                               <Listbox value={selected} onChange={setSelected}>
                                 <div className="relative mt-1">
-                                  <Listbox.Button className={`relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg ${styles.input} focus:outline-none `}>
+                                  <Listbox.Button className={`relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg ${styles.input} focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
                                     <span className="block truncate">{selected.name}</span>
                                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                       <HiSelector
@@ -159,7 +159,7 @@ export default function StaffList() {
                                           {({ selected, active }) => (
                                             <>
                                               <span
-                                                className={`${selected ? 'font-medium' : 'font-normal'
+                                                className={`${selected ? 'font-medium' : 'font-regular'
                                                   } block truncate`}
                                               >
                                                 {person.name}
@@ -181,9 +181,68 @@ export default function StaffList() {
                                   </Transition>
                                 </div>
                               </Listbox>
-                            </div>
+                            </div>*/}
                           </div>
-                        </div>
+                        </div> 
+
+
+    <div className="w-72">
+      <Listbox value={selected} onChange={setSelected}>
+        <div className="relative mt-1">
+          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+            <span className="block truncate">{selected.name}</span>
+            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+              <HiSelector
+                className="w-5 h-5 text-gray-400"
+                aria-hidden="true"
+              />
+            </span>
+          </Listbox.Button>
+          <Transition
+            as={Fragment}
+            leave="transition ease-in duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Listbox.Options className="absolute z-50 block w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              {people.map((person, personIdx) => (
+                <Listbox.Option
+                  key={personIdx}
+                  className={({ active }) =>
+                    `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
+                          cursor-default select-none relative py-2 pl-10 pr-4`
+                  }
+                  value={person}
+                >
+                  {({ selected, active }) => (
+                    <>
+                      <span
+                        className={`${
+                          selected ? 'font-medium' : 'font-normal'
+                        } block truncate`}
+                      >
+                        {person.name}
+                      </span>
+                      {selected ? (
+                        <span
+                          className={`${
+                            active ? 'text-amber-600' : 'text-amber-600'
+                          }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                        >
+                          <AiOutlineCheck className="w-5 h-5" aria-hidden="true" />
+                        </span>
+                      ) : null}
+                    </>
+                  )}
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
+          </Transition>
+        </div>
+      </Listbox>
+    </div>
+  
 
                         <hr className={styles.hr} />
                         <div className="flex flex-row justify-end items-center my-4">
@@ -262,21 +321,19 @@ export default function StaffList() {
                           key={person.name}
                         // className={`${person.selected && 'bg-blue-100'}`}
                         >
-                          <td className="px-4 py-2 text-sm font-normal whitespace-nowrap font-regular">
-
+                          <td className="px-4 py-2 text-sm font-regular whitespace-nowrap font-regular">
                             1
-
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap font-regular">
-                            <div className="text-sm font-normal text-gray-900">
+                            <div className="text-sm font-regular text-gray-900">
                               {person.name}
                             </div>
                           </td>
-                          <td className="px-4 py-2 whitespace-nowrap font-regular font-normal text-sm text-gray-500">
+                          <td className="px-4 py-2 whitespace-nowrap font-regular font-regular text-sm text-gray-500">
                             CSE
                           </td>
                           <td
-                            className="px-4 py-2 whitespace-nowrap font-regular font-normal text-left
+                            className="px-4 py-2 whitespace-nowrap font-regular font-regular text-left
                            text-sm font-medium"
                           >
                             DS, DSTL
@@ -350,44 +407,6 @@ export default function StaffList() {
               </div>
             </div>
           </div>
-          {/* <div className="py-6 px-5">
-                        <table responsive="md" className="font-regular font-16 mt-5 bg-tertiaryColor">
-                            <tbody className="text-secondaryColor">
-                                <tr>
-                                    <th><span className="ml-4">Sr.No.</span></th>
-                                    <th>Name</th>
-                                    <th>Department</th>
-                                    <th>Subjects</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td><span className="ml-4">1.</span></td>
-                                    <td>Seema Shukla</td>
-                                    <td>Information Technology</td>
-                                    <td>Data Structure, Python Programming, DSTL</td>
-                                    <td>Assign Time-Table</td>
-                                    <td>detailsIcon</td>
-                                </tr>
-                                <tr>
-                                    <td><span className="ml-4">2.</span></td>
-                                    <td>Seema Shukla</td>
-                                    <td>Information Technology</td>
-                                    <td>Data Structure, Python Programming, DSTL</td>
-                                    <td>Assign Time-Table</td>
-                                    <td>detailsIcon</td>
-                                </tr>
-                                <tr>
-                                    <td><span className="ml-4">3.</span></td>
-                                    <td>Seema Shukla</td>
-                                    <td>Information Technology</td>
-                                    <td>Data Structure, Python Programming, DSTL</td>
-                                    <td>Assign Time-Table</td>
-                                    <td>detailsIcon</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> */}
         </div>
       </div>
 
