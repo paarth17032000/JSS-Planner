@@ -35,7 +35,7 @@ class Class(models.Model):
 
 class Subject(models.Model):
     code = models.CharField(max_length=16, primary_key=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ManyToManyField(Department)
     name = models.CharField(max_length=128)
 
     def __str__(self):

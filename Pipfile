@@ -9,8 +9,12 @@ python-dotenv = "*"
 djangorestframework = "*"
 black = "*"
 djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

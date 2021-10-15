@@ -45,6 +45,7 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
+    username = None
     full_name = models.CharField(max_length=32)
     contact_no = models.CharField(max_length=10, validators=[validate_contact_number])
 
