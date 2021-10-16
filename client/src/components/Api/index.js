@@ -8,13 +8,10 @@ export const LoginUser = async (user) => {
             password: user.password
         }
         const url = `${BASE_API_URL}/accounts/jwt/create/`;
-        const header = { 'Content-Type': 'application/json' };
-        const response = await axios.post(url, req, {
-            headers: header
-        })
-    
-        console.log(response)
-    }catch(error){
-        console.log(error)
+        const response = await axios.post(url, req)
+        if(response) {localStorage.setItem('access_token', response.data.access)}
+        return response.data
+    } catch(error){
+        return error.message
     }
 }

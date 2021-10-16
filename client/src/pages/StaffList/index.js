@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, Fragment } from 'react'
-import { Menu, Dialog, Transition, Listbox } from '@headlessui/react'
+import { Menu, Dialog, Transition } from '@headlessui/react'
 import { NavLink } from 'react-router-dom'
 import styles from './StaffList.module.css'
 import addIcon from '../../assets/images/icons/add.png'
 import closeIcon from '../../assets/images/icons/close.png'
+import menuIcon from '../../assets/images/icons/menu.png'
 import TripleDots from "../../assets/images/icons/triple-dot.svg"
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
-import { HiSelector } from 'react-icons/hi'
-import { AiOutlineCheck } from 'react-icons/ai'
 
 const people = [
   { name: 'Wade Cooper' },
@@ -24,7 +23,7 @@ function classNames(...classes) {
 
 export default function StaffList() {
   let [isOpen, setIsOpen] = useState(false)
-  const [selected, setSelected] = useState(people[0])
+  // const [selected, setSelected] = useState(people[0])
 
   function closeModal() {
     setIsOpen(false)
@@ -45,7 +44,7 @@ export default function StaffList() {
             <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
           </div>
         </div>
-        <div className="flex md:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
+        <div className="flex hidden lg:inline-flex lg:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
           <NavLink to='staff-list'>
             <div className="text-primary-red pr-8">Home</div>
           </NavLink>
@@ -55,6 +54,9 @@ export default function StaffList() {
           <NavLink to='/'>
             <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
           </NavLink>
+        </div>
+        <div className="block lg:hidden pr-6 cursor-pointer">
+          <img src={menuIcon} alt="icon" width={32} height={24} />
         </div>
       </div>
 
@@ -110,10 +112,10 @@ export default function StaffList() {
                         </Dialog.Title>
                         <hr className={styles.hr} />
 
-                        <div className="mt-5 mb-10 px-5">
+                        <div className="mt-5 mb-10 px-2">
                           <div className="flex flex-row justify-between items-baseline">
                             <div className="font-regular font-16 text-secondary">Name</div>
-                            <div className="font-regular font-16 text-secondary pb-5 w-60">
+                            <div className="font-regular font-16 text-secondary pb-5 w-48 px-4 sm:w-60">
                               <input type="text" placeholder="Name..." className={`rounded-lg focus:outline-none ${styles.input}`} />
                             </div>
                           </div>
@@ -123,126 +125,7 @@ export default function StaffList() {
                               <input type="text" placeholder="Department..." className={`rounded-lg focus:outline-none ${styles.input}`} />
                             </div>
                           </div>
-                          <div className="flex flex-row justify-between items-baseline">
-                            <div className="font-regular font-16 text-secondary">Subjects</div>
-                            {/* <div className="font-regular font-16 text-secondary pb-5">
-                                                            <input type="text" placeholder="Choose" className={`rounded-lg ${styles.input}`} />
-                                                        </div> */}
-                            {/* <div className="w-60">
-                              <Listbox value={selected} onChange={setSelected}>
-                                <div className="relative mt-1">
-                                  <Listbox.Button className={`relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg ${styles.input} focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
-                                    <span className="block truncate">{selected.name}</span>
-                                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                      <HiSelector
-                                        className="w-5 h-5 text-gray-400"
-                                        aria-hidden="true"
-                                      />
-                                    </span>
-                                  </Listbox.Button>
-                                  <Transition
-                                    as={Fragment}
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
-                                  >
-                                    <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                      {people.map((person, personIdx) => (
-                                        <Listbox.Option
-                                          key={personIdx}
-                                          className={({ active }) =>
-                                            `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                          cursor-default select-none relative py-2 pl-10 pr-4`
-                                          }
-                                          value={person}
-                                        >
-                                          {({ selected, active }) => (
-                                            <>
-                                              <span
-                                                className={`${selected ? 'font-medium' : 'font-regular'
-                                                  } block truncate`}
-                                              >
-                                                {person.name}
-                                              </span>
-                                              {selected ? (
-                                                <span
-                                                  className={`${active ? 'text-amber-600' : 'text-amber-600'
-                                                    }
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                >
-                                                  <AiOutlineCheck className="w-5 h-5" aria-hidden="true" />
-                                                </span>
-                                              ) : null}
-                                            </>
-                                          )}
-                                        </Listbox.Option>
-                                      ))}
-                                    </Listbox.Options>
-                                  </Transition>
-                                </div>
-                              </Listbox>
-                            </div>*/}
-                          </div>
                         </div> 
-
-
-    <div className="w-72">
-      <Listbox value={selected} onChange={setSelected}>
-        <div className="relative mt-1">
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-            <span className="block truncate">{selected.name}</span>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <HiSelector
-                className="w-5 h-5 text-gray-400"
-                aria-hidden="true"
-              />
-            </span>
-          </Listbox.Button>
-          <Transition
-            as={Fragment}
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Listbox.Options className="absolute z-50 block w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {people.map((person, personIdx) => (
-                <Listbox.Option
-                  key={personIdx}
-                  className={({ active }) =>
-                    `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                          cursor-default select-none relative py-2 pl-10 pr-4`
-                  }
-                  value={person}
-                >
-                  {({ selected, active }) => (
-                    <>
-                      <span
-                        className={`${
-                          selected ? 'font-medium' : 'font-normal'
-                        } block truncate`}
-                      >
-                        {person.name}
-                      </span>
-                      {selected ? (
-                        <span
-                          className={`${
-                            active ? 'text-amber-600' : 'text-amber-600'
-                          }
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                        >
-                          <AiOutlineCheck className="w-5 h-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </Transition>
-        </div>
-      </Listbox>
-    </div>
-  
 
                         <hr className={styles.hr} />
                         <div className="flex flex-row justify-end items-center my-4">

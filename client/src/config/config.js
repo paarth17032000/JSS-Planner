@@ -1,1 +1,1 @@
-export const BASE_API_URL = 'https://ojuswi.pythonanywhere.com'
+export const BASE_API_URL = 'http://ojuswi.pythonanywhere.com'
