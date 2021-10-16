@@ -57,6 +57,25 @@ class Lecture_ViewSet(ModelViewSet):
     permission_classes = [IsAdminUserOrReadOnly]
     serializer_class = Lecture_Serializer
 
+    def evaluate_form_data(self, request, field):
+        if field in request.POST:
+            return request.POST.get(field)
+        else:
+            raise ValidationError({"detail": field + " field is required."})
+
+    def get_object_from_form_data(self, request, model, field, primary_key):
+        param_value = self.evaluate_form_data(request, field)
+
+        try:
+            if primary_key == "id":
+                object = model.objects.get(id=param_value)
+            else:
+                object = model.objects.get(code=param_value)
+        except model.DoesNotExist:
+            raise ValidationError({"detail": param_value + " does not exist."})
+
+        return object
+
     def get_queryset(self):
         queryset = self.queryset
         if "faculty" in self.request.query_params:
@@ -66,31 +85,14 @@ class Lecture_ViewSet(ModelViewSet):
         return queryset
 
     def create(self, request):
-        def evaluate_form_data(field):
-            if field in request.POST:
-                return request.POST.get(field)
-            else:
-                raise ValidationError({"detail": field + " field is required."})
-
-        def get_object_from_form_data(model, field, primary_key):
-            param_value = evaluate_form_data(field)
-
-            try:
-                if primary_key == "id":
-                    object = model.objects.get(id=param_value)
-                else:
-                    object = model.objects.get(code=param_value)
-            except model.DoesNotExist:
-                raise ValidationError({"detail": param_value + " does not exist."})
-
-            return object
-
-        classroom = evaluate_form_data("classroom")
-        time_slot = get_object_from_form_data(Time_Slot, "time_slot", "id")
-        week_day = get_object_from_form_data(Week_Day, "week_day", "code")
-        _class = get_object_from_form_data(Class, "class", "code")
-        subject = get_object_from_form_data(Subject, "subject", "code")
-        faculty = get_object_from_form_data(Faculty, "faculty", "code")
+        classroom = self.evaluate_form_data(request, "classroom")
+        time_slot = self.get_object_from_form_data(
+            request, Time_Slot, "time_slot", "id"
+        )
+        week_day = self.get_object_from_form_data(request, Week_Day, "week_day", "code")
+        _class = self.get_object_from_form_data(request, Class, "class", "code")
+        subject = self.get_object_from_form_data(request, Subject, "subject", "code")
+        faculty = self.get_object_from_form_data(request, Faculty, "faculty", "code")
 
         faculty_conflicts = Lecture.objects.filter(
             week_day=week_day, time_slot=time_slot, faculty=faculty
