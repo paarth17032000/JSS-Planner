@@ -16,6 +16,9 @@ class Week_Day(models.Model):
     def __str__(self):
         return self.day
 
+    class Meta:
+        verbose_name_plural = "Week Days"
+
 
 class Time_Slot(models.Model):
     starting_time = models.TimeField()
@@ -23,6 +26,9 @@ class Time_Slot(models.Model):
 
     def __str__(self):
         return str(self.starting_time) + " - " + str(self.ending_time)
+
+    class Meta:
+        verbose_name_plural = "Time Slots"
 
 
 class Class(models.Model):
@@ -32,9 +38,13 @@ class Class(models.Model):
     def __str__(self):
         return self.code
 
+    class Meta:
+        verbose_name_plural = "Classes"
+
 
 class Subject(models.Model):
     code = models.CharField(max_length=16, primary_key=True)
+    short_form = models.CharField(max_length=16)
     department = models.ManyToManyField(Department)
     name = models.CharField(max_length=128)
 
@@ -50,20 +60,17 @@ class Faculty(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Faculties"
+
 
 class Lecture(models.Model):
-    class_code = models.ForeignKey(Class, on_delete=models.CASCADE)
-    faculty_code = models.ForeignKey(Faculty, on_delete=models.CASCADE)
-    subject_code = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    _class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     week_day = models.ForeignKey(Week_Day, on_delete=models.CASCADE)
-    time_slot = models.ForeignKey(Time_Slot, on_delete=models.CASCADE)
+    faculty = models.ManyToManyField(Faculty)
+    time_slot = models.ManyToManyField(Time_Slot)
     classroom = models.CharField(max_length=8)
 
     def __str__(self):
-        return (
-            self.class_code.code
-            + " - "
-            + self.subject_code.code
-            + " - "
-            + self.faculty_code.code
-        )
+        return str(self._class) + " - " + str(self.subject) + " - " + str(self.faculty)
