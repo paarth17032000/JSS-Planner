@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, Fragment } from 'react'
-import { Menu, Dialog, Listbox, Transition } from '@headlessui/react'
+import { Listbox, Transition } from '@headlessui/react'
 import styles from './TimeTable.module.css'
 import { NavLink } from 'react-router-dom'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 import menuIcon from '../../assets/images/icons/menu.png'
 import {BiChevronDown} from 'react-icons/bi'
 import { BsCheck } from 'react-icons/bs'
-import circlePlus from '../../assets/images/icons/circlePlus.svg'
 import TTBlock from '../../components/TTBlock'
 
 const people = [
@@ -17,27 +16,22 @@ const people = [
     { name: 'Tom Cook' },
     { name: 'Tanya Fox' },
     { name: 'Hellen Schmidt' },
-]
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
-  
+] 
 
 export default function TimeTable() {
     const [selected, setSelected] = useState(people[0])
-    const [table, setTable] = useState(
-        {
-            cells: [
-              [{}, {}, {}, {}, {}, {}, {}],
-              [{}, {}, {}, {}, {}, {}, {}],
-              [{}, {}, {}, {}, {}, {}, {}],
-              [{}, {}, {}, {}, {}, {}, {}],
-              [{}, {}, {}, {}, {}, {}, {}],
-              [{}, {}, {}, {}, {}, {}, {}]
-            ]
-        }
-    )
+    // const [table, setTable] = useState(
+    //     {
+    //         cells: [
+    //           [{}, {}, {}, {}, {}, {}, {}],
+    //           [{}, {}, {}, {}, {}, {}, {}],
+    //           [{}, {}, {}, {}, {}, {}, {}],
+    //           [{}, {}, {}, {}, {}, {}, {}],
+    //           [{}, {}, {}, {}, {}, {}, {}],
+    //           [{}, {}, {}, {}, {}, {}, {}]
+    //         ]
+    //     }
+    // )
     return (
         <div className="min-h-screen bg-background">
 
