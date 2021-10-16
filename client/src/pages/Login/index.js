@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import { useHistory } from 'react-router'
 import { LoginUser } from '../../components/Api'
 import styles from './Login.module.css'
-import bg from '../../assets/images/bg-login.png'
+import bg from '../../assets/images/bg-login.svg'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 
 export default function Login() {

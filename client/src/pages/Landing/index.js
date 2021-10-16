@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Landing.module.css'
-import guest1 from '../../assets/images/logo/guest1.png'
-import guest2 from '../../assets/images/logo/guest2.png'
+import guest1 from '../../assets/images/logo/guest1.svg'
+import guest2 from '../../assets/images/logo/guest2.svg'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 
 export default function Landing() {

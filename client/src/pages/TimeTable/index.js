@@ -1,12 +1,14 @@
-import React from 'react'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState, Fragment } from 'react'
+import { Menu, Dialog, Listbox, Transition } from '@headlessui/react'
 import styles from './TimeTable.module.css'
 import { NavLink } from 'react-router-dom'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 import menuIcon from '../../assets/images/icons/menu.png'
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
 import {BiChevronDown} from 'react-icons/bi'
 import { BsCheck } from 'react-icons/bs'
+import circlePlus from '../../assets/images/icons/circlePlus.svg'
+import TTBlock from '../../components/TTBlock'
 
 const people = [
     { name: 'Wade Cooper' },
@@ -15,10 +17,27 @@ const people = [
     { name: 'Tom Cook' },
     { name: 'Tanya Fox' },
     { name: 'Hellen Schmidt' },
-  ]
+]
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
+  
 
 export default function TimeTable() {
-  const [selected, setSelected] = useState(people[0])
+    const [selected, setSelected] = useState(people[0])
+    const [table, setTable] = useState(
+        {
+            cells: [
+              [{}, {}, {}, {}, {}, {}, {}],
+              [{}, {}, {}, {}, {}, {}, {}],
+              [{}, {}, {}, {}, {}, {}, {}],
+              [{}, {}, {}, {}, {}, {}, {}],
+              [{}, {}, {}, {}, {}, {}, {}],
+              [{}, {}, {}, {}, {}, {}, {}]
+            ]
+        }
+    )
     return (
         <div className="min-h-screen bg-background">
 
@@ -26,19 +45,19 @@ export default function TimeTable() {
                 <div className="flex flex-row justify-center items-center">
                     <div><img src={Jss_Logo} alt="jss_logo" className={styles.jss_logo} /></div>
                     <div className="pl-5">
-                    <div className="font-bold text-primary font-22 ">JSS Academy of Technical Education</div>
-                    <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
+                        <div className="font-bold text-primary font-22 ">JSS Academy of Technical Education</div>
+                        <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
                     </div>
                 </div>
                 <div className="flex hidden lg:inline-flex lg:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
                     <NavLink to='staff-list'>
-                    <div className="text-primary-red pr-8">Home</div>
+                        <div className="text-primary-red pr-8">Home</div>
                     </NavLink>
                     <NavLink to='/time-table'>
-                    <div className="pr-8">Time-table</div>
+                        <div className="pr-8">Time-table</div>
                     </NavLink>
                     <NavLink to='/'>
-                    <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
+                        <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
                     </NavLink>  
                 </div>
                 <div className="block lg:hidden pr-6 cursor-pointer">
@@ -68,7 +87,7 @@ export default function TimeTable() {
                                         leaveFrom="opacity-100"
                                         leaveTo="opacity-0"
                                     >
-                                        <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                         {people.map((person, personIdx) => (
                                             <Listbox.Option
                                             key={personIdx}
@@ -128,7 +147,7 @@ export default function TimeTable() {
                                         leaveFrom="opacity-100"
                                         leaveTo="opacity-0"
                                     >
-                                        <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                         {people.map((person, personIdx) => (
                                             <Listbox.Option
                                             key={personIdx}
@@ -188,7 +207,7 @@ export default function TimeTable() {
                                         leaveFrom="opacity-100"
                                         leaveTo="opacity-0"
                                     >
-                                        <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                         {people.map((person, personIdx) => (
                                             <Listbox.Option
                                             key={personIdx}
@@ -248,7 +267,7 @@ export default function TimeTable() {
                                         leaveFrom="opacity-100"
                                         leaveTo="opacity-0"
                                     >
-                                        <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                         {people.map((person, personIdx) => (
                                             <Listbox.Option
                                             key={personIdx}
@@ -292,111 +311,116 @@ export default function TimeTable() {
 
                 <div className="my-6">
                     <div className="grid grid-cols-12 w-full gap-4">
-                        <div className="col-span-2 bg-white rounded-sm h-20 w-full">{''}</div>
-                        <div className="col-span-10 bg-white rounded-sm px-8">
-                        <div className="grid grid-cols-12">
-                                <div className="col-span-6">
-                                    <div className="grid grid-cols-4 py-7 ">
-                                        <div>8:30 - 9:30</div>
-                                        <div>8:30 - 9:30</div>
-                                        <div>8:30 - 9:30</div>
-                                        <div>8:30 - 9:30</div>
+                        <div className="col-span-2 bg-white rounded-lg h-20 w-full">{''}</div>
 
+                        <div className="col-span-10 bg-white py-2 px-6 h-full rounded-lg">
+                            <div className="grid grid-cols-12 gap-5">
+                                <div className="col-span-6">
+                                    <div className="grid grid-cols-4 gap-5">
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
                                     </div>
                                 </div>
-                                <div className="col-span-2">2</div>
-                                <div className="col-span-4">
-                                    <div className="grid grid-cols-3 py-7" >
-                                        <div>8:30 - 9:30</div>
-                                        <div>8:30 - 9:30</div>
-                                        <div>8:30 - 9:30</div>
+                                <div className="col-span-1">
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>{''}</div></div>
+                                </div>
+                                <div className="col-span-5">
+                                    <div className="grid grid-cols-3 gap-5">
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
+                                        <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>8:30 - 9:30</div></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-2 bg-white py-4 w-full">
-                            <div className="grid grid-cols-1 bg-white gap-6">
-                                <div className="h-16 w-40 flex items-center justify-center">Monday</div>
-                                <div className="h-16 w-40 flex items-center justify-center">Tuesday</div>
-                                <div className="h-16 w-40 flex items-center justify-center">Wednesday</div>
-                                <div className="h-16 w-40 flex items-center justify-center">Thursday</div>
-                                <div className="h-16 w-40 flex items-center justify-center">Friday</div>
-                                <div className="h-16 w-40 flex items-center justify-center">Saturday</div>
+
+                        <div className="col-span-2 bg-white p-6 w-full rounded-lg">
+                            <div className="grid grid-cols-1 gap-5">
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>Monday</div></div>
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>Tuesday</div></div>
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>Wednesday</div></div>
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>Thursday</div></div>
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>Friday</div></div>
+                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>Saturday</div></div>
                             </div>
                         </div>
-                        <div className="col-span-10 bg-secondary bg-white">
+
+                        <div className="col-span-10 bg-secondary bg-white rounded-lg">
                             <div className="grid grid-cols-12 p-6 gap-5">
 
                                 <div className="col-span-6">
                                     <div className="grid grid-cols-4 gap-5">
-                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                                    <div>
-                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                                    </div>
-                                        </div>
-                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                                    <div>
-                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                                    </div>
-                                        </div>
-                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                                    <div>
-                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                                    </div>
-                                        </div>
-                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                                    <div>
-                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                                    </div>
-                                        </div>
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                    
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
                                     </div>
                                 </div>
 
-                                <div className="col-span-2">2</div>
+                                <div className="col-span-1">
+                                    <div className="h-full w-full font-semi-bold font-18 text-shadow flex items-center justify-center tracking-widest">
+                                        <div className={styles.textrtl}>LUNCH BREAK</div>
+                                    </div>
+                                </div>
 
-                                <div className="col-span-4">
+                                <div className="col-span-5">
                                     <div className="grid grid-cols-3 gap-5">
-                                    <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                            <div>
-                                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                            </div>
-                                        </div>
-                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                            <div>
-                                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                            </div>
-                                        </div>
-                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
-                                            <div>
-                                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
-<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
-</svg>
-                                            </div>
-                                        </div>
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
+
+                                        <TTBlock />
+                                        <TTBlock />
+                                        <TTBlock />
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+
                     </div>
                 </div>
 
