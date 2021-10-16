@@ -68,9 +68,9 @@ class Lecture_ViewSet(ModelViewSet):
 
         try:
             if primary_key == "id":
-                object = model.objects.get(id=param_value)
+                object = model.objects.filter(id=param_value)
             else:
-                object = model.objects.get(code=param_value)
+                object = model.objects.filter(code=param_value)
         except model.DoesNotExist:
             raise ValidationError({"detail": param_value + " does not exist."})
 
@@ -86,27 +86,32 @@ class Lecture_ViewSet(ModelViewSet):
 
     def create(self, request):
         classroom = self.evaluate_form_data(request, "classroom")
-        time_slot = self.get_object_from_form_data(
+        time_slots = self.get_object_from_form_data(
             request, Time_Slot, "time_slot", "id"
         )
-        week_day = self.get_object_from_form_data(request, Week_Day, "week_day", "code")
-        _class = self.get_object_from_form_data(request, Class, "class", "code")
-        subject = self.get_object_from_form_data(request, Subject, "subject", "code")
-        faculty = self.get_object_from_form_data(request, Faculty, "faculty", "code")
+        week_day = self.get_object_from_form_data(
+            request, Week_Day, "week_day", "code"
+        )[0]
+        _class = self.get_object_from_form_data(request, Class, "class", "code")[0]
+        subject = self.get_object_from_form_data(request, Subject, "subject", "code")[0]
+        faculties = self.get_object_from_form_data(request, Faculty, "faculty", "code")
 
-        faculty_conflicts = Lecture.objects.filter(
-            week_day=week_day, time_slot=time_slot, faculty=faculty
-        )
-        if faculty_conflicts:
-            return Response(
-                {
-                    "detail": str(faculty)
-                    + " is already teaching "
-                    + str(faculty_conflicts[0])
-                    + " at this time."
-                },
-                status=HTTP_406_NOT_ACCEPTABLE,
-            )
+        lectures_on_this_day = Lecture.objects.filter(week_day=week_day)
+        for time_slot in time_slots:
+            for faculty in faculties:
+                faculty_conflicts = lectures_on_this_day.filter(
+                    time_slot=time_slot, faculty=faculty
+                )
+                if len(faculty_conflicts) > 0:
+                    return Response(
+                        {
+                            "detail": str(faculty)
+                            + " is already teaching "
+                            + str(faculty_conflicts[0])
+                            + " at this time."
+                        },
+                        status=HTTP_406_NOT_ACCEPTABLE,
+                    )
 
         new_lecture = Lecture.objects.create(
             week_day=week_day,
@@ -115,7 +120,9 @@ class Lecture_ViewSet(ModelViewSet):
             subject=subject,
         )
 
-        new_lecture.time_slot.add(time_slot)
-        new_lecture.faculty.add(faculty)
+        for time_slot in time_slots:
+            new_lecture.time_slot.add(time_slot)
+        for faculty in faculties:
+            new_lecture.faculty.add(faculty)
 
         return Response(Lecture_Serializer(new_lecture).data, status=HTTP_201_CREATED)
