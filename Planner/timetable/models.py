@@ -73,4 +73,4 @@ class Lecture(models.Model):
     faculty = models.ManyToManyField(Faculty)
 
     def __str__(self):
-        return str(self._class) + " - " + str(self.subject)
+        return str(self.subject) + " in " + str(self._class)
