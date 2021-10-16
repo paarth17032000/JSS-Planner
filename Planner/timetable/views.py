@@ -1,6 +1,7 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_406_NOT_ACCEPTABLE
+
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Department, Week_Day, Time_Slot, Class, Subject, Faculty, Lecture
@@ -57,14 +58,18 @@ class Lecture_ViewSet(ModelViewSet):
     permission_classes = [IsAdminUserOrReadOnly]
     serializer_class = Lecture_Serializer
 
-    def evaluate_form_data(self, request, field):
+    def evaluate_form_data(self, request, field, is_neccessary=True):
         if field in request.POST:
             return request.POST.get(field)
-        else:
+        elif is_neccessary:
             raise ValidationError({"detail": field + " field is required."})
+        else:
+            return None
 
-    def get_object_from_form_data(self, request, model, field, primary_key):
-        param_value = self.evaluate_form_data(request, field)
+    def get_object_from_form_data(
+        self, request, model, field, primary_key, is_neccessary=True
+    ):
+        param_value = self.evaluate_form_data(request, field, is_neccessary)
 
         try:
             if primary_key == "id":
@@ -72,7 +77,10 @@ class Lecture_ViewSet(ModelViewSet):
             else:
                 object = model.objects.filter(code=param_value)
         except model.DoesNotExist:
-            raise ValidationError({"detail": param_value + " does not exist."})
+            if is_neccessary:
+                raise ValidationError({"detail": param_value + " does not exist."})
+            else:
+                return None
 
         return object
 
