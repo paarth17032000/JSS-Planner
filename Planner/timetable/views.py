@@ -126,3 +126,48 @@ class Lecture_ViewSet(ModelViewSet):
             new_lecture.faculty.add(faculty)
 
         return Response(Lecture_Serializer(new_lecture).data, status=HTTP_201_CREATED)
+
+    def update(self, request, pk=None):
+        classroom = self.evaluate_form_data(request, "classroom")
+        time_slots = self.get_object_from_form_data(
+            request, Time_Slot, "time_slot", "id"
+        )
+        week_day = self.get_object_from_form_data(
+            request, Week_Day, "week_day", "code"
+        )[0]
+        _class = self.get_object_from_form_data(request, Class, "class", "code")[0]
+        subject = self.get_object_from_form_data(request, Subject, "subject", "code")[0]
+        faculties = self.get_object_from_form_data(request, Faculty, "faculty", "code")
+
+        lectures_on_this_day = Lecture.objects.filter(week_day=week_day)
+        lectures_on_this_day = lectures_on_this_day.exclude(id=pk)
+        for time_slot in time_slots:
+            for faculty in faculties:
+                faculty_conflicts = lectures_on_this_day.filter(
+                    time_slot=time_slot, faculty=faculty
+                )
+                if len(faculty_conflicts) > 0:
+                    return Response(
+                        {
+                            "detail": str(faculty)
+                            + " is already teaching "
+                            + str(faculty_conflicts[0])
+                            + " at this time."
+                        },
+                        status=HTTP_406_NOT_ACCEPTABLE,
+                    )
+
+        lecture = Lecture.objects.get(id=pk)
+        lecture.time_slot.clear()
+        lecture.faculty.clear()
+        lecture.classroom = classroom
+        lecture.week_day = week_day
+        lecture._class = _class
+        lecture.subject = subject
+        for time_slot in time_slots:
+            lecture.time_slot.add(time_slot)
+        for faculty in faculties:
+            lecture.faculty.add(faculty)
+        lecture.save()
+
+        return Response(Lecture_Serializer(lecture).data, status=HTTP_201_CREATED)
