@@ -65,12 +65,12 @@ class Faculty(models.Model):
 
 
 class Lecture(models.Model):
-    _class = models.ForeignKey(Class, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     week_day = models.ForeignKey(Week_Day, on_delete=models.CASCADE)
-    faculty = models.ManyToManyField(Faculty)
     time_slot = models.ManyToManyField(Time_Slot)
     classroom = models.CharField(max_length=8)
+    _class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    faculty = models.ManyToManyField(Faculty)
 
     def __str__(self):
-        return str(self._class) + " - " + str(self.subject) + " - " + str(self.faculty)
+        return str(self._class) + " - " + str(self.subject)
