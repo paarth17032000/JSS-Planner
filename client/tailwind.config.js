@@ -18,7 +18,8 @@ module.exports = {
       'links': '#CDCEDA',
       'white': '#FFFFFF',
       'default': '#E3E8F0 ',
-      'hover-bg': '#F5F5F5'
+      'hover-bg': '#F5F5F5',
+      'tt' : '#E8F5FF'
     }),
   },
   variants: {

@@ -55,7 +55,7 @@ export default function StaffList() {
             <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
           </NavLink>
         </div>
-        <div className="block lg:hidden px-8 cursor-pointer">
+        <div className="block lg:hidden pr-6 cursor-pointer">
           <img src={menuIcon} alt="icon" width={32} height={24} />
         </div>
       </div>
@@ -112,10 +112,10 @@ export default function StaffList() {
                         </Dialog.Title>
                         <hr className={styles.hr} />
 
-                        <div className="mt-5 mb-10 px-5">
+                        <div className="mt-5 mb-10 px-2">
                           <div className="flex flex-row justify-between items-baseline">
                             <div className="font-regular font-16 text-secondary">Name</div>
-                            <div className="font-regular font-16 text-secondary pb-5 w-60">
+                            <div className="font-regular font-16 text-secondary pb-5 w-48 px-4 sm:w-60">
                               <input type="text" placeholder="Name..." className={`rounded-lg focus:outline-none ${styles.input}`} />
                             </div>
                           </div>

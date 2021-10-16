@@ -41,7 +41,7 @@ export default function TimeTable() {
                     <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
                     </NavLink>  
                 </div>
-                <div className="block lg:hidden px-8 cursor-pointer">
+                <div className="block lg:hidden pr-6 cursor-pointer">
                     <img src={menuIcon} alt="icon" width={32} height={24} />
                 </div>
             </div>
@@ -287,16 +287,123 @@ export default function TimeTable() {
                             </Listbox>
                         </div>
                     </div>         
-                    
+                           
                 </div>
 
-                <div className="bg-primary grid grid- mt-8">
-                    <div></div>
-                    <div></div>
+                <div className="my-6">
+                    <div className="grid grid-cols-12 w-full gap-4">
+                        <div className="col-span-2 bg-white rounded-sm h-20 w-full">{''}</div>
+                        <div className="col-span-10 bg-white rounded-sm px-8">
+                        <div className="grid grid-cols-12">
+                                <div className="col-span-6">
+                                    <div className="grid grid-cols-4 py-7 ">
+                                        <div>8:30 - 9:30</div>
+                                        <div>8:30 - 9:30</div>
+                                        <div>8:30 - 9:30</div>
+                                        <div>8:30 - 9:30</div>
+
+                                    </div>
+                                </div>
+                                <div className="col-span-2">2</div>
+                                <div className="col-span-4">
+                                    <div className="grid grid-cols-3 py-7" >
+                                        <div>8:30 - 9:30</div>
+                                        <div>8:30 - 9:30</div>
+                                        <div>8:30 - 9:30</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-span-2 bg-white py-4 w-full">
+                            <div className="grid grid-cols-1 bg-white gap-6">
+                                <div className="h-16 w-40 flex items-center justify-center">Monday</div>
+                                <div className="h-16 w-40 flex items-center justify-center">Tuesday</div>
+                                <div className="h-16 w-40 flex items-center justify-center">Wednesday</div>
+                                <div className="h-16 w-40 flex items-center justify-center">Thursday</div>
+                                <div className="h-16 w-40 flex items-center justify-center">Friday</div>
+                                <div className="h-16 w-40 flex items-center justify-center">Saturday</div>
+                            </div>
+                        </div>
+                        <div className="col-span-10 bg-secondary bg-white">
+                            <div className="grid grid-cols-12 p-6 gap-5">
+
+                                <div className="col-span-6">
+                                    <div className="grid grid-cols-4 gap-5">
+                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                                    <div>
+                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                                    </div>
+                                        </div>
+                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                                    <div>
+                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                                    </div>
+                                        </div>
+                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                                    <div>
+                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                                    </div>
+                                        </div>
+                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                                    <div>
+                                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-span-2">2</div>
+
+                                <div className="col-span-4">
+                                    <div className="grid grid-cols-3 gap-5">
+                                    <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                            <div>
+                                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                            </div>
+                                        </div>
+                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                            <div>
+                                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                            </div>
+                                        </div>
+                                        <div className="px-6 flex items-center justify-center py-6 bg-tt">
+                                            <div>
+                                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="14" stroke="#3779FF" stroke-width="2"/>
+<path d="M15.9979 14.0403H22V15.9879H15.9979V22H13.9729V15.9879H8V14.0403H13.9729V8H15.9979V14.0403Z" fill="#3779FF"/>
+</svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
+                                                   
         </div>
 
     )
 }
+
