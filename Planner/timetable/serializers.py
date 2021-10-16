@@ -1,4 +1,3 @@
-from django.utils import timezone
 from rest_framework import serializers
 
 from .models import Department, Week_Day, Time_Slot, Class, Subject, Faculty, Lecture
@@ -42,10 +41,10 @@ class Faculty_Serializer(serializers.ModelSerializer):
 
 class Lecture_Serializer(serializers.ModelSerializer):
     week_day = Week_Day_Serializer()
-    time_slot = Time_Slot_Serializer()
+    time_slot = Time_Slot_Serializer(many=True)
     _class = Class_Serializer()
     subject = Subject_Serializer()
-    faculty = Faculty_Serializer()
+    faculty = Faculty_Serializer(many=True)
 
     class Meta:
         model = Lecture
