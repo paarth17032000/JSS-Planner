@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, Fragment, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import styles from './TimeTable.module.css'
+import styles from './GuestView.module.css'
 import { NavLink } from 'react-router-dom'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 import menuIcon from '../../assets/images/icons/menu.png'
@@ -375,7 +375,7 @@ export default function TimeTable() {
 
                                 <div className="col-span-6">
                                     <div className="grid grid-cols-4 gap-5">
-                                        <TTBlock />
+                                        <TTBlock subject_name={'DSTL'} subject_code={'KCN-023'} teacher_name={'NJD'} />
                                         <TTBlock />
                                         <TTBlock />
                                         <TTBlock />

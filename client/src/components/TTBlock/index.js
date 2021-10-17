@@ -8,16 +8,28 @@ import circlePlus from '../../assets/images/icons/circlePlus.svg'
 //     return classes.filter(Boolean).join(' ')
 // }
 
-export default function TTBlock() {
+export default function TTBlock(props) {
+    const {subject_name, subject_code, teacher_name} = props
     return (
         <div className="px-6 flex items-center justify-center py-6 bg-tt h-16 w-full rounded-lg">
             <div>
                 
                 <Menu as="div" className="relative inline-block text-left">
-                    <div>
-                        <Menu.Button className="inline-flex justify-center w-full mt-1">
-                            <img src={circlePlus} alt="icon" />
-                        </Menu.Button>
+                    <div>  
+                        { subject_name != null || subject_code != null || teacher_name != null ? (
+                            <div className="flex flex-col">
+                                <div className="font-bold text-primary font-16">{subject_name || null}</div>
+                                <div className="flex flex-row">
+                                    <div className="font-semi-bold text-secondary font-8">{subject_code || null}</div>
+                                    <div className="font-semi-bold text-secondary font-8">{','}{teacher_name || null}</div>
+                                </div>
+                            </div>
+                        ) : (
+                            <Menu.Button className="inline-flex justify-center w-full mt-1">
+                                <img src={circlePlus} alt="icon" />
+                            </Menu.Button>
+                        )}
+                        
                     </div>
 
                     <Transition

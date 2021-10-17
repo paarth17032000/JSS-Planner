@@ -50,5 +50,11 @@ export const routes = [
         path: '/staff-list',
         // gaurd: '',
         component: lazy(() => import('./pages/StaffList'))
+    },
+    {
+        exact: true,
+        path: '/time-table-view',
+        // gaurd: '',
+        component: lazy(() => import('./pages/GuestView'))
     }
 ]
