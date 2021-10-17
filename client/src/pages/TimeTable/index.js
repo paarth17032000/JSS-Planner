@@ -5,11 +5,10 @@ import styles from './TimeTable.module.css'
 import { NavLink } from 'react-router-dom'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 import menuIcon from '../../assets/images/icons/menu.png'
-import { getFaculty, getSubjects, getDepartments } from "../../apis/index"
+import { getFaculty, getSubjects,  getClasses } from "../../apis/index"
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCheck } from 'react-icons/bs'
 import TTBlock from '../../components/TTBlock'
-
 const semester = [
     { name: 'I' },
     { name: 'II' },
@@ -21,26 +20,37 @@ const semester = [
     { name: 'VIII' },
 ]
 
+// const class = [
+//     { name: 'I' },
+//     { name: 'II' },
+//     { name: 'III' },
+//     { name: 'IV' },
+//     { name: 'V' },
+//     { name: 'VI' },
+//     { name: 'VII' },
+//     { name: 'VIII' },
+// ]
+
 export default function TimeTable() {
     const [subjects, setSubjects] = useState([])
-    // const [classes, setClasses] = useState([])
-    const [departments, setDepartments] = useState([])
+    const [classes, setClasses] = useState([])
+    // const [departments, setDepartments] = useState([])
     const [faculty, setFaculty] = useState([])
     const [loading, setLoading] = useState(true)
 
     const [selectedFaculty, setSelectedFaculty] = useState({})
     const [selectedClass, setSelectedClass] = useState({})
-    const [selectedDepartment, setSelectedDepartment] = useState({})
-    const [selectedSemester, setSelectedSemester] = useState(semester[0])
+    // const [selectedDepartment, setSelectedDepartment] = useState({})
+    // const [selectedSemester, setSelectedSemester] = useState(semester[0])
     useEffect(() => {
         async function getData() {
             try {
                 let subs = await getSubjects();
                 setSubjects(subs);
-                // let cls = await getClasses();
-                // setClasses(cls);
-                let dp = await getDepartments();
-                setDepartments(dp);
+                let cls = await getClasses();
+                setClasses(cls);
+                // let dp = await getDepartments();
+                // setDepartments(dp);
                 let fc = await getFaculty();
                 setFaculty(fc);
                 setLoading(false);
@@ -51,7 +61,7 @@ export default function TimeTable() {
         }
         getData();
     }, [])
-
+//    {console.log(classes)}
     if (loading) {
         return <div>Loading...</div>
     }
@@ -95,7 +105,7 @@ export default function TimeTable() {
                     <img src={menuIcon} alt="icon" width={32} height={24} />
                 </div>
             </div>
-            {console.log(selectedFaculty)}
+            {/* {console.log(selectedFaculty)} */}
             <div className="my-6 mx-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="flex flex-col">
@@ -156,7 +166,7 @@ export default function TimeTable() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Department</div>
                         <div className="w-50">
                             <Listbox value={selectedDepartment} onChange={setSelectedDepartment}>
@@ -212,9 +222,9 @@ export default function TimeTable() {
                                 </div>
                             </Listbox>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Subjects</div>
                         <div className="w-50">
                             <Listbox value={selectedClass} onChange={setSelectedClass}>
@@ -270,15 +280,15 @@ export default function TimeTable() {
                                 </div>
                             </Listbox>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-col">
-                        <div className="font-regular font-12 text-shadow">Semester</div>
+                        <div className="font-regular font-12 text-shadow">Class</div>
                         <div className="w-50">
-                            <Listbox value={selectedSemester} onChange={setSelectedSemester}>
+                            <Listbox value={selectedClass} onChange={setSelectedClass}>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selectedSemester.name}</span>
+                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selectedClass.code}</span>
                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                             <BiChevronDown
                                                 className="w-5 h-5 text-gray-400"
@@ -292,8 +302,9 @@ export default function TimeTable() {
                                         leaveFrom="opacity-100"
                                         leaveTo="opacity-0"
                                     >
+                                     
                                         <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                            {semester.map((person, personIdx) => (
+                                            {classes?.map((person, personIdx) => (
                                                 <Listbox.Option
                                                     key={personIdx}
                                                     className={({ active }) =>
@@ -302,15 +313,15 @@ export default function TimeTable() {
                                                     }
                                                     value={person}
                                                 >
-                                                    {({ selectedSemester, active }) => (
+                                                    {({ selectedClass, active }) => (
                                                         <>
                                                             <span
-                                                                className={`${selectedSemester ? 'font-medium hover:bg-hover-bg' : 'font-normal'
+                                                                className={`${selectedClass ? 'font-medium hover:bg-hover-bg' : 'font-normal'
                                                                     } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
                                                             >
-                                                                {person.name}
+                                                                {person.code}
                                                             </span>
-                                                            {selectedSemester ? (
+                                                            {selectedClass ? (
                                                                 <span
                                                                     className={`${active ? 'text-amber-600' : 'text-amber-600'
                                                                         }
@@ -375,35 +386,35 @@ export default function TimeTable() {
 
                                 <div className="col-span-6">
                                     <div className="grid grid-cols-4 gap-5">
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="1" slot="1" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="2" slot="2" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="3" slot="3" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="4" slot="4" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="8" slot="1" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="9" slot="2" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="10" slot="3" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="11" slot="4" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="15" slot="1" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="16" slot="2" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="17" slot="3" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="18" slot="4" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="22" slot="1" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="23" slot="2" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="24" slot="3" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="25" slot="4" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="29" slot="1" d="Fri"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="30" slot="2" d="Fri"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="31" slot="3" d="Fri"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="32" slot="4" d="Fri"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="36" slot="1" d="Sat"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="37" slot="2" d="Sat"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="38" slot="3" d="Sat"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="39" slot="4" d="Sat"  faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
                                     </div>
                                 </div>
 
@@ -415,29 +426,29 @@ export default function TimeTable() {
 
                                 <div className="col-span-5">
                                     <div className="grid grid-cols-3 gap-5">
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="5" slot="5" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="6" slot="6" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="7" slot="7" d="Mon" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="12" slot="5" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="13" slot="6" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="14" slot="7" d="Tue" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="19" slot="5" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="20" slot="6" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="21" slot="7" d="Wed" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="26" slot="5" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="27" slot="6" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="28" slot="7" d="Thu" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="33" slot="5" d="Fri" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="34" slot="6" d="Fri" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="35" slot="7" d="Fri" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
 
-                                        <TTBlock />
-                                        <TTBlock />
-                                        <TTBlock />
+                                        <TTBlock id="40" slot="5" d="Sat" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="41" slot="6" d="Sat" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
+                                        <TTBlock id="42" slot="7" d="Sat" faculty={faculty} subjects={subjects} semester={semester} class={selectedClass} />
                                     </div>
                                 </div>
 

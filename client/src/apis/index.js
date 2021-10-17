@@ -76,3 +76,20 @@ export const getDepartments = async () => {
         console.log(error.message)
     }
 }
+
+
+export const addLecture = async(formData) => {
+    console.log(formData);
+    try {
+        const {data} = await axios.post(`${BASE_API_URL}/timetable/lectures`,formData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        console.log(data);
+        return data;
+    } catch (error) {
+          console.log(error.message)
+    }
+}
