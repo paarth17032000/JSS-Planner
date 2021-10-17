@@ -1,29 +1,39 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Menu, Dialog, Transition } from '@headlessui/react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import styles from './StaffList.module.css'
 import addIcon from '../../assets/images/icons/add.png'
 import closeIcon from '../../assets/images/icons/close.png'
 import menuIcon from '../../assets/images/icons/menu.png'
 import TripleDots from "../../assets/images/icons/triple-dot.svg"
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
+import { getFaculty, logout } from "../../apis/index"
 
-const people = [
-  { name: 'Wade Cooper' },
-  { name: 'Arlene Mccoy' },
-  { name: 'Devon Webb' },
-  { name: 'Tom Cook' },
-  { name: 'Tanya Fox' },
-  { name: 'Hellen Schmidt' },
-]
+// const people = [
+//   { name: 'Wade Cooper' },
+//   { name: 'Arlene Mccoy' },
+//   { name: 'Devon Webb' },
+//   { name: 'Tom Cook' },
+//   { name: 'Tanya Fox' },
+//   { name: 'Hellen Schmidt' },
+// ]
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function StaffList() {
   let [isOpen, setIsOpen] = useState(false)
-  // const [selected, setSelected] = useState(people[0])
+  let [faculty, setFaculty] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const history = useHistory();
+
+  useEffect(() => {
+    getFaculty().then(res => {
+      setFaculty(res);
+      setLoading(false)
+    })
+  }, [])
 
   function closeModal() {
     setIsOpen(false)
@@ -33,6 +43,9 @@ export default function StaffList() {
     setIsOpen(true)
   }
 
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <div className="min-h-screen bg-background">
 
@@ -44,7 +57,7 @@ export default function StaffList() {
             <div className="font-regular text-primary font-16">C-20/1, Sector-62, NOIDA.</div>
           </div>
         </div>
-        <div className="flex hidden lg:inline-flex lg:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
+        <div className="hidden lg:inline-flex lg:flex-row flex-col justify-center items-center uppercase font-semi-bold font-14 text-shadow px-8">
           <NavLink to='staff-list'>
             <div className="text-primary-red pr-8">Home</div>
           </NavLink>
@@ -52,7 +65,7 @@ export default function StaffList() {
             <div className="pr-8">Time-table</div>
           </NavLink>
           <NavLink to='/'>
-            <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
+            <div onClick={() => logout(history)} className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
           </NavLink>
         </div>
         <div className="block lg:hidden pr-6 cursor-pointer">
@@ -125,7 +138,7 @@ export default function StaffList() {
                               <input type="text" placeholder="Department..." className={`rounded-lg focus:outline-none ${styles.input}`} />
                             </div>
                           </div>
-                        </div> 
+                        </div>
 
                         <hr className={styles.hr} />
                         <div className="flex flex-row justify-end items-center my-4">
@@ -198,7 +211,7 @@ export default function StaffList() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {people?.map((person) => (
+                      {faculty?.map((person) => (
                         <tr
                           // eslint-disable-next-line no-underscore-dangle
                           key={person.name}

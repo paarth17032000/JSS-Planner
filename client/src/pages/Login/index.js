@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
-import { LoginUser } from '../../components/Api'
+import { login } from "../../apis/index"
 import styles from './Login.module.css'
 import bg from '../../assets/images/bg-login.svg'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
@@ -16,10 +16,8 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const result = await LoginUser(user)
-        if(result){
-            history.push('/staff-list')
-        }
+        await login(user, history)
+
     }
 
     const handleChange = (e) => {
@@ -52,8 +50,8 @@ export default function Login() {
                         </div>
                         <div className="font-regular font-16 text-right text-secondary pb-8">Forget Password?</div>
                         {/* <Link to='/staff-list'> */}
-                            {/* <input type="submit" className="bg-primary text-white rounded-lg p-3 text-center font-semi-bold font-16">Login</input> */}
-                            <input type="submit" value="Login" className="bg-primary w-full text-white rounded-lg p-3 text-center font-semi-bold font-16" />
+                        {/* <input type="submit" className="bg-primary text-white rounded-lg p-3 text-center font-semi-bold font-16">Login</input> */}
+                        <input type="submit" value="Login" className="bg-primary w-full text-white rounded-lg p-3 text-center font-semi-bold font-16" />
                         {/* </Link> */}
                     </form>
                 </div>
@@ -63,8 +61,8 @@ export default function Login() {
                 <div className="h-28"></div>
                 <div className={`flex flex-col justify-center items-center ${styles.section}`}>
                     <div className="font-regular font-36 text-white text-center">
-                        Manage 
-                        <span className="font-bold">{' '}Time Table{' '}</span> 
+                        Manage
+                        <span className="font-bold">{' '}Time Table{' '}</span>
                         Easily
                     </div>
                     <div className="mt-6 mx-5">

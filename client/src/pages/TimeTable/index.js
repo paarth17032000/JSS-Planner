@@ -1,25 +1,62 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import styles from './TimeTable.module.css'
 import { NavLink } from 'react-router-dom'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 import menuIcon from '../../assets/images/icons/menu.png'
-import {BiChevronDown} from 'react-icons/bi'
+import { getFaculty, getSubjects, getDepartments } from "../../apis/index"
+import { BiChevronDown } from 'react-icons/bi'
 import { BsCheck } from 'react-icons/bs'
 import TTBlock from '../../components/TTBlock'
 
-const people = [
-    { name: 'Wade Cooper' },
-    { name: 'Arlene Mccoy' },
-    { name: 'Devon Webb' },
-    { name: 'Tom Cook' },
-    { name: 'Tanya Fox' },
-    { name: 'Hellen Schmidt' },
-] 
+const semester = [
+    { name: 'I' },
+    { name: 'II' },
+    { name: 'III' },
+    { name: 'IV' },
+    { name: 'V' },
+    { name: 'VI' },
+    { name: 'VII' },
+    { name: 'VIII' },
+]
 
 export default function TimeTable() {
-    const [selected, setSelected] = useState(people[0])
+    const [subjects, setSubjects] = useState([])
+    // const [classes, setClasses] = useState([])
+    const [departments, setDepartments] = useState([])
+    const [faculty, setFaculty] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const [selectedFaculty, setSelectedFaculty] = useState({})
+    const [selectedClass, setSelectedClass] = useState({})
+    const [selectedDepartment, setSelectedDepartment] = useState({})
+    const [selectedSemester, setSelectedSemester] = useState(semester[0])
+    useEffect(() => {
+        async function getData() {
+            try {
+                let subs = await getSubjects();
+                setSubjects(subs);
+                // let cls = await getClasses();
+                // setClasses(cls);
+                let dp = await getDepartments();
+                setDepartments(dp);
+                let fc = await getFaculty();
+                setFaculty(fc);
+                setLoading(false);
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+        getData();
+    }, [])
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
+
     // const [table, setTable] = useState(
     //     {
     //         cells: [
@@ -52,27 +89,27 @@ export default function TimeTable() {
                     </NavLink>
                     <NavLink to='/'>
                         <div className="bg-primary text-white rounded py-3 px-8">Sign Out</div>
-                    </NavLink>  
+                    </NavLink>
                 </div>
                 <div className="block lg:hidden pr-6 cursor-pointer">
                     <img src={menuIcon} alt="icon" width={32} height={24} />
                 </div>
             </div>
-
+            {console.log(selectedFaculty)}
             <div className="my-6 mx-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Faculty</div>
                         <div className="w-50">
-                            <Listbox value={selected} onChange={setSelected}>
+                            <Listbox value={selectedFaculty} onChange={setSelectedFaculty}>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selected.name}</span>
+                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selectedFaculty.name}</span>
                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                        <BiChevronDown
-                                            className="w-5 h-5 text-gray-400"
-                                            aria-hidden="true"
-                                        />
+                                            <BiChevronDown
+                                                className="w-5 h-5 text-gray-400"
+                                                aria-hidden="true"
+                                            />
                                         </span>
                                     </Listbox.Button>
                                     <Transition
@@ -82,38 +119,36 @@ export default function TimeTable() {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {people.map((person, personIdx) => (
-                                            <Listbox.Option
-                                            key={personIdx}
-                                            className={({ active }) =>
-                                                `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
+                                            {faculty?.map((person, personIdx) => (
+                                                <Listbox.Option
+                                                    key={personIdx}
+                                                    className={({ active }) =>
+                                                        `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
                                                     cursor-default select-none relative py-2 pl-10 pr-4 hover:bg-hover-bg`
-                                            }
-                                            value={person}
-                                            >
-                                            {({ selected, active }) => (
-                                                <>
-                                                <span
-                                                    className={`${
-                                                    selected ? 'font-medium hover:bg-hover-bg' : 'font-normal'
-                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
-                                                >
-                                                    {person.name}
-                                                </span>
-                                                {selected ? (
-                                                    <span
-                                                    className={`${
-                                                        active ? 'text-amber-600' : 'text-amber-600'
                                                     }
+                                                    value={person}
+                                                >
+                                                    {({ selectedFaculty, active }) => (
+                                                        <>
+                                                            <span
+                                                                className={`${selectedFaculty ? 'font-medium hover:bg-hover-bg' : 'font-normal'
+                                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
+                                                            >
+                                                                {person.name}
+                                                            </span>
+                                                            {selectedFaculty ? (
+                                                                <span
+                                                                    className={`${active ? 'text-amber-600' : 'text-amber-600'
+                                                                        }
                                                             absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                    >
-                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
-                                                    </span>
-                                                ) : null}
-                                                </>
-                                            )}
-                                            </Listbox.Option>
-                                        ))}
+                                                                >
+                                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
                                         </Listbox.Options>
                                     </Transition>
                                 </div>
@@ -124,15 +159,15 @@ export default function TimeTable() {
                     <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Department</div>
                         <div className="w-50">
-                            <Listbox value={selected} onChange={setSelected}>
+                            <Listbox value={selectedDepartment} onChange={setSelectedDepartment}>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selected.name}</span>
+                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selectedDepartment.name}</span>
                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                        <BiChevronDown
-                                            className="w-5 h-5 text-gray-400"
-                                            aria-hidden="true"
-                                        />
+                                            <BiChevronDown
+                                                className="w-5 h-5 text-gray-400"
+                                                aria-hidden="true"
+                                            />
                                         </span>
                                     </Listbox.Button>
                                     <Transition
@@ -142,38 +177,36 @@ export default function TimeTable() {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {people.map((person, personIdx) => (
-                                            <Listbox.Option
-                                            key={personIdx}
-                                            className={({ active }) =>
-                                                `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
+                                            {departments?.map((person, personIdx) => (
+                                                <Listbox.Option
+                                                    key={personIdx}
+                                                    className={({ active }) =>
+                                                        `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
                                                     cursor-default select-none relative py-2 pl-10 pr-4 hover:bg-hover-bg`
-                                            }
-                                            value={person}
-                                            >
-                                            {({ selected, active }) => (
-                                                <>
-                                                <span
-                                                    className={`${
-                                                    selected ? 'font-medium hover:bg-hover-bg' : 'font-normal'
-                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
-                                                >
-                                                    {person.name}
-                                                </span>
-                                                {selected ? (
-                                                    <span
-                                                    className={`${
-                                                        active ? 'text-amber-600' : 'text-amber-600'
                                                     }
+                                                    value={person}
+                                                >
+                                                    {({ selectedDepartment, active }) => (
+                                                        <>
+                                                            <span
+                                                                className={`${selectedDepartment ? 'font-medium hover:bg-hover-bg' : 'font-normal'
+                                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
+                                                            >
+                                                                {person.name}
+                                                            </span>
+                                                            {selectedDepartment ? (
+                                                                <span
+                                                                    className={`${active ? 'text-amber-600' : 'text-amber-600'
+                                                                        }
                                                             absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                    >
-                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
-                                                    </span>
-                                                ) : null}
-                                                </>
-                                            )}
-                                            </Listbox.Option>
-                                        ))}
+                                                                >
+                                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
                                         </Listbox.Options>
                                     </Transition>
                                 </div>
@@ -182,17 +215,17 @@ export default function TimeTable() {
                     </div>
 
                     <div className="flex flex-col">
-                        <div className="font-regular font-12 text-shadow">Class</div>
+                        <div className="font-regular font-12 text-shadow">Subjects</div>
                         <div className="w-50">
-                            <Listbox value={selected} onChange={setSelected}>
+                            <Listbox value={selectedClass} onChange={setSelectedClass}>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selected.name}</span>
+                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selectedClass.name}</span>
                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                        <BiChevronDown
-                                            className="w-5 h-5 text-gray-400"
-                                            aria-hidden="true"
-                                        />
+                                            <BiChevronDown
+                                                className="w-5 h-5 text-gray-400"
+                                                aria-hidden="true"
+                                            />
                                         </span>
                                     </Listbox.Button>
                                     <Transition
@@ -202,38 +235,36 @@ export default function TimeTable() {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {people.map((person, personIdx) => (
-                                            <Listbox.Option
-                                            key={personIdx}
-                                            className={({ active }) =>
-                                                `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
+                                            {subjects?.map((person, personIdx) => (
+                                                <Listbox.Option
+                                                    key={personIdx}
+                                                    className={({ active }) =>
+                                                        `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
                                                     cursor-default select-none relative py-2 pl-10 pr-4 hover:bg-hover-bg`
-                                            }
-                                            value={person}
-                                            >
-                                            {({ selected, active }) => (
-                                                <>
-                                                <span
-                                                    className={`${
-                                                    selected ? 'font-medium hover:bg-hover-bg' : 'font-normal'
-                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
-                                                >
-                                                    {person.name}
-                                                </span>
-                                                {selected ? (
-                                                    <span
-                                                    className={`${
-                                                        active ? 'text-amber-600' : 'text-amber-600'
                                                     }
+                                                    value={person}
+                                                >
+                                                    {({ selectedClass, active }) => (
+                                                        <>
+                                                            <span
+                                                                className={`${selectedClass ? 'font-medium hover:bg-hover-bg' : 'font-normal'
+                                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
+                                                            >
+                                                                {person.name}
+                                                            </span>
+                                                            {selectedClass ? (
+                                                                <span
+                                                                    className={`${active ? 'text-amber-600' : 'text-amber-600'
+                                                                        }
                                                             absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                    >
-                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
-                                                    </span>
-                                                ) : null}
-                                                </>
-                                            )}
-                                            </Listbox.Option>
-                                        ))}
+                                                                >
+                                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
                                         </Listbox.Options>
                                     </Transition>
                                 </div>
@@ -244,15 +275,15 @@ export default function TimeTable() {
                     <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Semester</div>
                         <div className="w-50">
-                            <Listbox value={selected} onChange={setSelected}>
+                            <Listbox value={selectedSemester} onChange={setSelectedSemester}>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selected.name}</span>
+                                        <span className="block truncate font-semi-bold font-12 text-secondary">{selectedSemester.name}</span>
                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                        <BiChevronDown
-                                            className="w-5 h-5 text-gray-400"
-                                            aria-hidden="true"
-                                        />
+                                            <BiChevronDown
+                                                className="w-5 h-5 text-gray-400"
+                                                aria-hidden="true"
+                                            />
                                         </span>
                                     </Listbox.Button>
                                     <Transition
@@ -262,45 +293,43 @@ export default function TimeTable() {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {people.map((person, personIdx) => (
-                                            <Listbox.Option
-                                            key={personIdx}
-                                            className={({ active }) =>
-                                                `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
+                                            {semester.map((person, personIdx) => (
+                                                <Listbox.Option
+                                                    key={personIdx}
+                                                    className={({ active }) =>
+                                                        `${active ? 'text-amber-900 bg-amber-100 hover:bg-hover-bg' : 'text-gray-900'}
                                                     cursor-default select-none relative py-2 pl-10 pr-4 hover:bg-hover-bg`
-                                            }
-                                            value={person}
-                                            >
-                                            {({ selected, active }) => (
-                                                <>
-                                                <span
-                                                    className={`${
-                                                    selected ? 'font-medium hover:bg-hover-bg' : 'font-normal'
-                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
-                                                >
-                                                    {person.name}
-                                                </span>
-                                                {selected ? (
-                                                    <span
-                                                    className={`${
-                                                        active ? 'text-amber-600' : 'text-amber-600'
                                                     }
+                                                    value={person}
+                                                >
+                                                    {({ selectedSemester, active }) => (
+                                                        <>
+                                                            <span
+                                                                className={`${selectedSemester ? 'font-medium hover:bg-hover-bg' : 'font-normal'
+                                                                    } block truncate font-semi-bold font-12 text-secondary hover:bg-hover-bg cursor-pointer`}
+                                                            >
+                                                                {person.name}
+                                                            </span>
+                                                            {selectedSemester ? (
+                                                                <span
+                                                                    className={`${active ? 'text-amber-600' : 'text-amber-600'
+                                                                        }
                                                             absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                    >
-                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
-                                                    </span>
-                                                ) : null}
-                                                </>
-                                            )}
-                                            </Listbox.Option>
-                                        ))}
+                                                                >
+                                                                    <BsCheck className="w-5 h-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
                                         </Listbox.Options>
                                     </Transition>
                                 </div>
                             </Listbox>
                         </div>
-                    </div>         
-                           
+                    </div>
+
                 </div>
 
                 <div className="my-6">
@@ -318,7 +347,7 @@ export default function TimeTable() {
                                     </div>
                                 </div>
                                 <div className="col-span-1">
-                                <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>{''}</div></div>
+                                    <div className="h-16 w-full font-medium font-16 text-secondary flex items-center justify-center"><div>{''}</div></div>
                                 </div>
                                 <div className="col-span-5">
                                     <div className="grid grid-cols-3 gap-5">
@@ -365,12 +394,12 @@ export default function TimeTable() {
                                         <TTBlock />
                                         <TTBlock />
                                         <TTBlock />
-                                        
+
                                         <TTBlock />
                                         <TTBlock />
                                         <TTBlock />
                                         <TTBlock />
-                                    
+
                                         <TTBlock />
                                         <TTBlock />
                                         <TTBlock />
@@ -419,7 +448,7 @@ export default function TimeTable() {
                 </div>
 
             </div>
-                                                   
+
         </div>
 
     )
