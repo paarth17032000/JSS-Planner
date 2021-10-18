@@ -72,10 +72,10 @@ export default function TTBlock(props) {
     const handleSave = async () => {
         let formData;
         formData = {
-            classroom: classroom,
-            time_slot: props.slot,
+            classroom: "23",
+            time_slot: "1",
             week_day: props.d,
-            class: props.class.code,
+            class:'4CS1 ',
             subject: selectedSubject.code,
             faculty: selectedFaculty.code,
         }
