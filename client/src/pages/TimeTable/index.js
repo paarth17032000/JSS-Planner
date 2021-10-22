@@ -108,7 +108,7 @@ export default function TimeTable() {
             {/* {console.log(selectedFaculty)} */}
             <div className="my-6 mx-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Faculty</div>
                         <div className="w-50">
                             <Listbox value={selectedFaculty} onChange={setSelectedFaculty}>
@@ -164,7 +164,7 @@ export default function TimeTable() {
                                 </div>
                             </Listbox>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* <div className="flex flex-col">
                         <div className="font-regular font-12 text-shadow">Department</div>
@@ -287,7 +287,7 @@ export default function TimeTable() {
                         <div className="w-50">
                             <Listbox value={selectedClass} onChange={setSelectedClass}>
                                 <div className="relative mt-1">
-                                    <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                                    <Listbox.Button className="relative w-full h-8 py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                                         <span className="block truncate font-semi-bold font-12 text-secondary">{selectedClass.code}</span>
                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                             <BiChevronDown

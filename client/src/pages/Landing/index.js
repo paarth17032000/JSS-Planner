@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Landing.module.css'
-import guest1 from '../../assets/images/logo/guest1.svg'
-import guest2 from '../../assets/images/logo/guest2.svg'
+import guest1 from '../../assets/images/logo/guest10.png'
+import guest2 from '../../assets/images/logo/guest11.png'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
 
 export default function Landing() {
@@ -25,7 +25,7 @@ export default function Landing() {
                         <Link to='/login'>
                             <div className={`bg-white mt-6 rounded-3xl ${styles.block}`}>
                                 <div className="bg-primary h-36 flex justify-center items-center rounded-3xl">
-                                    <img src={guest1} alt="logo"/>
+                                    <img src={guest1} alt="logo" width={96} height={85.6} />
                                 </div>
                                 <div className="mt-6 text-left ml-5">
                                     <div className="font-bold font-18 text-primary">Admin</div>
@@ -33,10 +33,10 @@ export default function Landing() {
                                 </div>
                             </div>
                         </Link>
-                        <Link to='/time-table'>
+                        <Link to='/time-table-view'>
                             <div className={`bg-white mt-6 rounded-3xl ${styles.block}`}>
                                 <div className="bg-secondary h-36 flex justify-center items-center rounded-3xl">
-                                    <img src={guest2} alt="logo"/>
+                                    <img src={guest2} alt="logo" width={96} height={85.6} />
                                 </div>
                                 <div className="mt-6 text-left ml-5">
                                     <div className="font-bold font-18 text-primary">Guest</div>

@@ -78,15 +78,22 @@ export const getDepartments = async () => {
   }
 };
 
-export const addLecture = async () => {
+export const addLecture = async (data) => {
+  // const {classroom, time_slot, subject, faculty, week_day, class} = data
   // console.log(formData);
   var formData = new FormData();
-  formData.append("classroom", "23");
-  formData.append("time_slot", "2/");
-  formData.append("subject", "KCS-552");
-  formData.append("faculty", "KAB");
-  formData.append("week_day", "Mon");
-  formData.append("class", "4CS1");
+  // classroom: "23",
+  // time_slot: "1",
+  // week_day: props.d,
+  // class:'4CS1 ',
+  // subject: selectedSubject.code,data.
+  // faculty: selectedFaculty.code,
+  formData.append("classroom", data.classroom);
+  formData.append("time_slot",data.time_slot);
+  formData.append("subject", data.subject);
+  formData.append("faculty", data.faculty);
+  formData.append("week_day", data.week_day);
+  formData.append("class", data.class);
   try {
     var myHeaders = new Headers();
     myHeaders.append(
@@ -185,12 +192,21 @@ export const getLecutes = async (faculty, classroom) => {
   console.log("SHRUTI");
   console.log(faculty, classroom);
   try {
-    const { data } = await axios.get(
-      `${BASE_API_URL}/timetable/lectures?faculty=${faculty.code}&class=${classroom.code}`,
-      config
-    );
-    console.log("lectures", data);
-    data.map((lec) => {
+    let res;
+    if(faculty.code){
+      res = await axios.get(
+        `${BASE_API_URL}/timetable/lectures?faculty=${faculty.code}&class=${classroom.code}`,
+        config
+      );  
+    }else {
+      res  = await axios.get(
+        `${BASE_API_URL}/timetable/lectures?class=${classroom.code}`,
+        config
+      );
+    }
+    
+    console.log("lectures", res.data);
+    res.data.map((lec) => {
       if (lec.week_day.code == "Mon") {
         lec.time_slot.map((slot) => {
           for (let i = 0; i < 7; i++) {

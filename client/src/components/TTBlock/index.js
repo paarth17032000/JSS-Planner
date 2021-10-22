@@ -8,6 +8,7 @@ import circlePlus from '../../assets/images/icons/circlePlus.svg'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCheck } from 'react-icons/bs'
 import { addLecture } from "../../apis/index"
+import { useLocation } from 'react-router'
 // import axios from 'axios'
 // import { BASE_API_URL } from '../../config/config'
 
@@ -27,6 +28,8 @@ import { addLecture } from "../../apis/index"
 // ]
 
 export default function TTBlock(props) {
+    const location = useLocation();
+    console.log(location);
     // const [faculty, setFaculty] = useState([])
     const [selectedFaculty, setSelectedFaculty] = useState({})
     const {subject_name, subject_code, teacher_name} = props  
@@ -70,17 +73,17 @@ export default function TTBlock(props) {
     // }, [])
 
     const handleSave = async () => {
-        let formData;
-        formData = {
-            classroom: "23",
-            time_slot: "1",
+        let data;
+        data = {
+            classroom: classroom,
+            time_slot: props.slot,
             week_day: props.d,
-            class:'4CS1 ',
+            class: props.class.code,
             subject: selectedSubject.code,
             faculty: selectedFaculty.code,
         }
-        await addLecture(formData);
-        console.log(formData)
+        await addLecture(data);
+        console.log(data)
         closeModal()
     }
 
@@ -91,7 +94,7 @@ export default function TTBlock(props) {
                 
                 {/* <Menu as="div" className="relative inline-block text-left"> */}
                     <div>  
-                        { subject_name != null || subject_code != null || teacher_name != null ? (
+                        { subject_name != null || subject_code != null || teacher_name != null || location.pathname === 'time-table-view' ? (
                             <div className="flex flex-col">
                                 <div className="font-bold text-primary font-16">{subject_name || null}</div>
                                 <div className="flex flex-row">
