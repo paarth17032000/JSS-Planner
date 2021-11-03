@@ -1,5 +1,6 @@
 import React, {Suspense, lazy, Fragment} from 'react'
 import {Route, Switch} from 'react-router-dom'
+import Authenticated from './components/Authenticated'
 
 export const renderRoutes = (routes) => {
     return(
@@ -42,13 +43,13 @@ export const routes = [
     {
         exact: true,
         path: '/time-table',
-        // gaurd: '',
+        gaurd: Authenticated,
         component: lazy(() => import('./pages/TimeTable'))
     },
     {
         exact: true,
         path: '/staff-list',
-        // gaurd: '',
+        gaurd: Authenticated,
         component: lazy(() => import('./pages/StaffList'))
     },
     {

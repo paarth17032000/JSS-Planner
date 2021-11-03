@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { login } from "../../apis/index"
 import styles from './Login.module.css'
 import bg from '../../assets/images/bg-login.svg'
 import Jss_Logo from '../../assets/images/logo/jss_logo.png'
+import { toastNotification } from '../../components/utils/helper'
 
 export default function Login() {
     const [user, setUser] = useState({
@@ -16,8 +17,18 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await login(user, history)
-
+        try{
+            let response = await login(user, history)
+            console.log(response)
+            if(response.status) {toastNotification('success','Login Success', 3000)}
+        } catch(error){
+            toastNotification('error','Invalid Username or Password', 3000)
+            // console.log(error)
+        }
+        
+        
+        // if(data) toastNotification('success','Login Success', 3000)
+        // if(error) toastNotification('error',error, 3000)
     }
 
     const handleChange = (e) => {
@@ -51,7 +62,7 @@ export default function Login() {
                         <div className="font-regular font-16 text-right text-secondary pb-8">Forget Password?</div>
                         {/* <Link to='/staff-list'> */}
                         {/* <input type="submit" className="bg-primary text-white rounded-lg p-3 text-center font-semi-bold font-16">Login</input> */}
-                        <input type="submit" value="Login" className="bg-primary w-full text-white rounded-lg p-3 text-center font-semi-bold font-16" />
+                        <input type="submit" value="Login" className="bg-primary cursor-pointer w-full text-white rounded-lg p-3 text-center font-semi-bold font-16" />
                         {/* </Link> */}
                     </form>
                 </div>

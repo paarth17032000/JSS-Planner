@@ -19,18 +19,19 @@ const config = {
 };
 
 export const login = async (formData, history) => {
-  try {
-    const { data } = await axios.post(
+  // try {
+    const response = await axios.post(
       `${BASE_API_URL}/accounts/jwt/create`,
       formData,
       config
     );
-    console.log(data);
-    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("accessToken", response.data.access);
     history.push("/time-table");
-  } catch (error) {
-    console.log(error);
-  }
+    // console.log(response, data)
+    return response
+  // } catch (error) {
+  //   return error
+  // }
 };
 
 export const logout = (history) => {
